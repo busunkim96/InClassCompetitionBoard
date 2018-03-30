@@ -29,4 +29,11 @@ export class ViewCompetitionComponent implements OnInit {
   		.subscribe(competition => this.competition = competition);
   }
 
+  joinCompetition(): void {
+    /*todo: send request to backend to join competition */
+    console.log('competition ' + this.competition.id + ' joined!');
+    this.competition.joined = true;
+
+  }
+
 }

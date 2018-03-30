@@ -6,8 +6,14 @@
 	{{competition.description}}
 </p>
 
-<form>
+<div *ngIf="competition.joined == true">
+	<form>
 
-	<input type="file" name="competitionSubmission">
-	<br><input type="submit">
-</form>
+		<input type="file" name="competitionSubmission">
+		<br><input type="submit">
+	</form>
+</div>
+
+<div *ngIf="competition.joined == false">
+	<button (click)="joinCompetition()">Join Competition</button>
+</div>

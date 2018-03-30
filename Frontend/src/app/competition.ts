@@ -4,5 +4,6 @@ export class Competition {
 	professorName: string;
 	id: number;
 	description: string;
+	joined: boolean;
 
 }
