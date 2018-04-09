@@ -1,0 +1,16 @@
+<h2> Users to be Approved</h2>
+
+<form #f="ngForm">
+      <div *ngFor="let user of unapprovedUsers;">
+        <input type="checkbox" 
+        [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="user.selected"/> {{user.name}}
+      </div>
+      <button (click)="approveUsers()">Approve Users</button>
+</form>
+
+<h2> Approved Users</h2>
+
+<ul>
+<li *ngFor="let user of approvedUsers;"> {{ user.name }} </li>
+</ul>
