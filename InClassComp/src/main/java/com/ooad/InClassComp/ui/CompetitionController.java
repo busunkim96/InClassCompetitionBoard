@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import javax.servlet.http.HttpServletResponse;
 
 import com.ooad.InClassComp.doa.CompetitionDAO;
 import com.ooad.InClassComp.doa.SubmissionDAO;
@@ -106,7 +107,7 @@ public class CompetitionController {
 
 	@RequestMapping(value="/competition/getAll")
 	@ResponseBody
-	public List<CompetitionResponse> getAllCompetitions() {
+	public List<CompetitionResponse> getAllCompetitions(HttpServletResponse response) {
 		List<Competition> competitions = null;
 		try {
 			competitions = (List<Competition>) competitionDAO.findAll();
@@ -117,6 +118,7 @@ public class CompetitionController {
 		for(Competition comp : competitions) {
 			competitionResponses.add(new CompetitionResponse(comp));
 		}
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		return competitionResponses;
 	}
 
