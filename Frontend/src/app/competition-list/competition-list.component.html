@@ -2,11 +2,10 @@
 <tr>
 	<th>Name</th>
 	<th>Class</th>
-	<th>Professor</th>
 </tr>
 <tr *ngFor="let competition of competitions">
-	<a routerLink="/viewCompetition/{{ competition.id }}"><td> {{ competition.name }}</td></a>
+	<a routerLink="/viewCompetition/{{ competition.id }}"><td> {{ competition.competitionName }}</td></a>
 	<td> {{ competition.className }} </td>
-	<td> {{ competition.professorName }}</td>
+
 </tr>
 </table>

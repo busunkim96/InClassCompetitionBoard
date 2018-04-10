@@ -1,9 +1,6 @@
 export class Competition {
-	name: String;
-	className: String;
-	professorName: string;
+	competitionName: string;
+	className: string;
 	id: number;
-	description: string;
-	joined: boolean;
 
 }

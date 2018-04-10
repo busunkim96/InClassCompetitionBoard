@@ -44,6 +44,8 @@ import com.ooad.InClassComp.model.User;
 import com.ooad.InClassComp.model.UserType;
 import com.ooad.InClassComp.ui.model.CompetitionResponse;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 public class CompetitionController {
 
@@ -55,6 +57,8 @@ public class CompetitionController {
 
 	@Autowired
 	SubmissionDAO submissionDAO;
+
+
 
 	@RequestMapping(value="/competition/create")
 	@ResponseBody
@@ -107,7 +111,7 @@ public class CompetitionController {
 
 	@RequestMapping(value="/competition/getAll")
 	@ResponseBody
-	public List<CompetitionResponse> getAllCompetitions() {
+	public List<CompetitionResponse> getAllCompetitions(HttpServletResponse response) {
 		List<Competition> competitions = null;
 		try {
 			competitions = (List<Competition>) competitionDAO.findAll();
@@ -118,6 +122,8 @@ public class CompetitionController {
 		for(Competition comp : competitions) {
 			competitionResponses.add(new CompetitionResponse(comp));
 		}
+		response.setHeader("Access-Control-Allow-Origin", "*");
+
 		return competitionResponses;
 	}
 
