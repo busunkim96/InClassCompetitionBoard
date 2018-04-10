@@ -1,15 +1,10 @@
 package com.ooad.InClassComp.ui;
 
 import java.util.Date;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -42,9 +37,8 @@ import com.ooad.InClassComp.model.TestCriteria;
 import com.ooad.InClassComp.model.UploadSubmission;
 import com.ooad.InClassComp.model.User;
 import com.ooad.InClassComp.model.UserType;
+import com.ooad.InClassComp.service.CompetitionFacade;
 import com.ooad.InClassComp.ui.model.CompetitionResponse;
-
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class CompetitionController {
@@ -57,9 +51,10 @@ public class CompetitionController {
 
 	@Autowired
 	SubmissionDAO submissionDAO;
-
-
-
+	
+	@Autowired
+	private CompetitionFacade competitionFacade;
+	
 	@RequestMapping(value="/competition/create")
 	@ResponseBody
 	public ResponseEntity<com.ooad.InClassComp.ui.model.ResponseEntity>
@@ -93,7 +88,7 @@ public class CompetitionController {
 				competition.setCompetitionName(competitionName);
 				competition.setDescription(description);
 				competition.setClassName(className);
-				competition = competitionDAO.save(competition);
+				competition = competitionFacade.save(competition);
 				com.ooad.InClassComp.ui.model.ResponseEntity response  = new com.ooad.InClassComp.ui.model.ResponseEntity();
 				response.setStatus(competition.getId().toString());
 				response.setMessage("COMPETITION CREATED");
@@ -111,7 +106,7 @@ public class CompetitionController {
 
 	@RequestMapping(value="/competition/getAll")
 	@ResponseBody
-	public List<CompetitionResponse> getAllCompetitions(HttpServletResponse response) {
+	public List<CompetitionResponse> getAllCompetitions() {
 		List<Competition> competitions = null;
 		try {
 			competitions = (List<Competition>) competitionDAO.findAll();
@@ -122,8 +117,6 @@ public class CompetitionController {
 		for(Competition comp : competitions) {
 			competitionResponses.add(new CompetitionResponse(comp));
 		}
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
 		return competitionResponses;
 	}
 
@@ -150,8 +143,7 @@ public class CompetitionController {
 		Optional<User> users = null;
 		try {
 			users = (Optional<User>)userDAO.findById(userId);
-			competitions = (Optional<Competition> )competitionDAO.findById(compId);
-
+			competitions = competitionFacade.findById(compId);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -171,7 +163,7 @@ public class CompetitionController {
 			submission.setCompetition(competition);
 			submissions.add(submission);
 			competition.setCompetitionUserSubmissions(submissions);
-			competitionDAO.save(competition);
+			competitionFacade.save(competition);
 			return competition.getId();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -195,7 +187,7 @@ public class CompetitionController {
 		competition = competitions.get(); 
 		try {
 			competition.setDescription(description);
-			competitionDAO.save(competition);
+			competitionFacade.save(competition);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -228,7 +220,7 @@ public class CompetitionController {
 				e.printStackTrace();
 			}
 			competition.setEndDate(endD);
-			competitionDAO.save(competition);
+			competitionFacade.save(competition);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -259,9 +251,9 @@ public class CompetitionController {
 				Set<TestCriteria> criterias = competition.getCompetitionCriteria();
 				criterias.add(uploadFile);
 				competition.setCompetitionCriteria(criterias);
-				competitionDAO.save(competition);
+				competitionFacade.save(competition);
 			}
-			competitionDAO.save(competition);
+			competitionFacade.save(competition);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -337,7 +329,7 @@ public class CompetitionController {
 		return Long.valueOf(-1);
 	}
 
-
+/**
 	@RequestMapping(value="/competition/evaluateSubmission/")
 	@ResponseBody
 	public Long evaluateSubmission(Long userId,Long compId) {
@@ -425,11 +417,13 @@ public class CompetitionController {
 				e.printStackTrace();
 			}
 			try {
-				Process pBuild = Runtime.getRuntime().exec("javac -d ./build ./out/Solution.java");
-				Process pBuild2 = Runtime.getRuntime().exec("javac -d ./build ./out/Testcase.java");
-				String err = IOUtils.toString(pBuild.getErrorStream());
-				System.out.println(err);
-				Runtime.getRuntime().exec("jar cvf YourJar.jar ./build/*");
+				String MVN_COMMAND = "mvn archetype:generate -DgroupId=ooad.inclasscomp -DartifactId=out1 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false";
+				Process pCreate = Runtime.getRuntime().exec(MVN_COMMAND);
+				Process pMoveTest = Runtime.getRuntime().exec("mv out/Testcase.java  out1/src/main/java/ooad/inclasscomp/");
+				Process pMoveSoln = Runtime.getRuntime().exec("mv out/Solution.java  out1/src/main/java/ooad/inclasscomp/");				
+				Process pPackage = Runtime.getRuntime().exec("mvn package",null,new File("out1"));
+				Process execute = Runtime.getRuntime().exec("java -cp target/out1-1.0-SNAPSHOT.jar ooad.inclasscomp.Testcase",null,new File("out1"));
+				System.out.println(IOUtils.toString(execute.getInputStream()));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -439,6 +433,49 @@ public class CompetitionController {
 
 		return Long.valueOf(-1);
 	}
+	*/
+	@RequestMapping(value="/competition/updateScore/")
+	@ResponseBody
+	public Long updateScore(Long userId,Long compId,Long score) {
+		Optional<Competition> competitions = null;
+		Optional<User> users = null;
+		try {
+			users = (Optional<User>)userDAO.findById(userId);
+			competitions = (Optional<Competition> )competitionDAO.findById(compId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		Competition competition = null;
+		User user = null;
+		if(users.isPresent() && competitions.isPresent()) {
+			competition = competitions.get();
+			user= users.get();
+		} else {
+			return Long.valueOf(-1);
+		}
+		Submission targetSubmission = null;
+		for(Submission submission:competition.getCompetitionUserSubmissions()) {
+			if(submission.getUser().getId().equals(userId) &&
+					submission.getCompetition().getId().equals(compId)) {
+				targetSubmission = submission;
+			}
+		}
+		if(targetSubmission == null) {
+			return Long.valueOf(-1);
+		} else {
+			Set<UploadSubmission> targetUploads = targetSubmission.getUploadedSubmissions();
+			if(targetUploads == null || targetUploads.size() <=0) {
+				return Long.valueOf(-1);
+			}
+			List<UploadSubmission> targetUploadList = new ArrayList<UploadSubmission>(targetUploads);
+			targetUploadList = sortUploadSubmission(targetUploadList);
+			UploadSubmission targetUpload = targetUploadList.get(0);
+			targetUpload.setScore(score);
+			competitionFacade.save(competition);
+			return targetUpload.getId();
+		}
+	}
+
 	public List<UploadSubmission> sortUploadSubmission(List<UploadSubmission> criteriaList){
 		if(criteriaList.size() >1) {
 			Collections.sort(criteriaList,new Comparator<UploadSubmission>(){

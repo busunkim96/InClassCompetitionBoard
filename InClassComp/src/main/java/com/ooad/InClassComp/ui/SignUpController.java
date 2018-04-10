@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ooad.InClassComp.doa.UserDAO;
 import com.ooad.InClassComp.model.User;
+import com.ooad.InClassComp.service.UserFacade;
+import com.ooad.InClassComp.service.UserServiceFactory;
 import com.ooad.InClassComp.ui.model.ResponseEntity;
 import com.ooad.InClassComp.ui.model.SignUpUser;
 
@@ -17,19 +18,13 @@ import com.ooad.InClassComp.ui.model.SignUpUser;
 public class SignUpController {
 	
 	@Autowired
-	private UserDAO userDAO;
+	private UserFacade userFacade;
 
 	@RequestMapping(value="/register/User", method=RequestMethod.POST)
 	public String createUser(@ModelAttribute SignUpUser signUpUser,Model model) {
 		ResponseEntity response = new ResponseEntity();
-		User user = new User();
-		user.setEmail(signUpUser.getEmail());
-		user.setUserName(signUpUser.getUserName());
-		user.setPassword(signUpUser.getPassword());
-		user.setAccepted(Boolean.FALSE);
-		user.setType(signUpUser.getType());
 		try {
-			userDAO.save(user);
+			UserServiceFactory.createUser(signUpUser);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -49,6 +44,4 @@ public class SignUpController {
 		model.addAttribute("signUpUser", new SignUpUser());
 		return "registration";
 	}
-
-
 }
