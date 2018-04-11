@@ -14,6 +14,4 @@ public interface UserDAO extends CrudRepository<User, Long>{
 	public List<User> findByType(Integer type);
 	public List<User> findByAccepted(Boolean accepted);
 	public List<User> findByEmail(String email);
-	
-
 }

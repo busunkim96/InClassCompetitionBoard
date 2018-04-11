@@ -1,16 +1,11 @@
 package com.ooad.InClassComp.ui;
 
 import java.util.Date;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -18,7 +13,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,32 +21,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import javax.servlet.http.HttpServletResponse;
 
-import com.ooad.InClassComp.doa.CompetitionDAO;
-import com.ooad.InClassComp.doa.SubmissionDAO;
-import com.ooad.InClassComp.doa.UserDAO;
 import com.ooad.InClassComp.model.Competition;
 import com.ooad.InClassComp.model.Submission;
 import com.ooad.InClassComp.model.TestCriteria;
 import com.ooad.InClassComp.model.UploadSubmission;
 import com.ooad.InClassComp.model.User;
-import com.ooad.InClassComp.model.UserType;
 import com.ooad.InClassComp.service.CompetitionFacade;
 import com.ooad.InClassComp.ui.model.CompetitionResponse;
 
 @Controller
 public class CompetitionController {
 
-	@Autowired
-	UserDAO userDAO;
-
-	@Autowired
-	CompetitionDAO competitionDAO;
-
-	@Autowired
-	SubmissionDAO submissionDAO;
-	
 	@Autowired
 	private CompetitionFacade competitionFacade;
 	
@@ -62,55 +42,31 @@ public class CompetitionController {
 	createCompetition(String userName, String competitionName,
 			String endDate, String className,
 			String description) {
-		List<User> users = null;
 		try {
-			users = userDAO.findByUserName(userName);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		DateFormat format = new SimpleDateFormat("MM-DD-yyyy", Locale.ENGLISH);
-		Date endD = null;
-		try {
-			if(endDate != null) {
-				endD= format.parse(endDate);
+			Long competitionId = competitionFacade.createCompetition(userName, competitionName, endDate, className, description);
+			if(competitionId == -1L) {
+				return new ResponseEntity<com.ooad.InClassComp.ui.model.ResponseEntity>(HttpStatus.BAD_REQUEST);
 			}
-		}catch(ParseException e) {
-			e.printStackTrace();
-		}
-		try {
-			if(users != null && users.size() == 1 && 
-					users.get(0).getAccepted() == Boolean.TRUE &&
-					users.get(0).getType().equals(UserType.FACULTY.ordinal())) {
-				Competition competition = new Competition();
-				Date date = new Date(Calendar.getInstance().getTime().getTime());
-				competition.setCreatedBy(users.get(0));
-				competition.setCreatedDate(date);
-				competition.setEndDate(endD);
-				competition.setCompetitionName(competitionName);
-				competition.setDescription(description);
-				competition.setClassName(className);
-				competition = competitionFacade.save(competition);
-				com.ooad.InClassComp.ui.model.ResponseEntity response  = new com.ooad.InClassComp.ui.model.ResponseEntity();
-				response.setStatus(competition.getId().toString());
-				response.setMessage("COMPETITION CREATED");
-				ResponseEntity<com.ooad.InClassComp.ui.model.ResponseEntity> responseEntity = 
-						new  ResponseEntity<com.ooad.InClassComp.ui.model.ResponseEntity>(response,HttpStatus.OK);
-				return responseEntity ;
-			}
+			com.ooad.InClassComp.ui.model.ResponseEntity response  = new com.ooad.InClassComp.ui.model.ResponseEntity();
+			response.setStatus(competitionId.toString());
+			response.setMessage("COMPETITION CREATED");
+			ResponseEntity<com.ooad.InClassComp.ui.model.ResponseEntity> responseEntity = 
+					new  ResponseEntity<com.ooad.InClassComp.ui.model.ResponseEntity>(response,HttpStatus.OK);
+			return responseEntity;
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<com.ooad.InClassComp.ui.model.ResponseEntity>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<com.ooad.InClassComp.ui.model.ResponseEntity>(HttpStatus.BAD_REQUEST);
 	}
 
 
 	@RequestMapping(value="/competition/getAll")
 	@ResponseBody
-	public List<CompetitionResponse> getAllCompetitions(HttpServletResponse response) {
+	public List<CompetitionResponse> getAllCompetitions() {
 		List<Competition> competitions = null;
 		try {
-			competitions = (List<Competition>) competitionDAO.findAll();
+			competitions = (List<Competition>) competitionFacade.findAll();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -118,7 +74,6 @@ public class CompetitionController {
 		for(Competition comp : competitions) {
 			competitionResponses.add(new CompetitionResponse(comp));
 		}
-		response.setHeader("Access-Control-Allow-Origin", "*");
 		return competitionResponses;
 	}
 
@@ -127,7 +82,7 @@ public class CompetitionController {
 	public List<CompetitionResponse> getByCompetitionName(String competitionName) {
 		List<Competition> competitions = null;
 		try {
-			competitions = (List<Competition>) competitionDAO.findByCompetitionNameLikeIgnoreCase(competitionName);
+			competitions = competitionFacade.findByCompetitionNameLikeIgnoreCase(competitionName);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -141,36 +96,7 @@ public class CompetitionController {
 	@RequestMapping(value="/competition/join/")
 	@ResponseBody
 	public Long joinCompetition(Long userId,Long compId) {
-		Optional<Competition> competitions = null;
-		Optional<User> users = null;
-		try {
-			users = (Optional<User>)userDAO.findById(userId);
-			competitions = competitionFacade.findById(compId);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		User user = null;
-		Competition competition = null;
-		if(users.isPresent() && competitions.isPresent()) {
-			user = users.get();
-			competition = competitions.get(); 
-		}		
-		if(user.getAccepted() != Boolean.TRUE || !user.getType().equals(UserType.STUDENT.ordinal())) {
-			return Long.valueOf(-1);
-		}
-		try {
-			Set<Submission> submissions = competition.getCompetitionUserSubmissions();
-			Submission submission = new Submission();
-			submission.setUser(user);
-			submission.setCompetition(competition);
-			submissions.add(submission);
-			competition.setCompetitionUserSubmissions(submissions);
-			competitionFacade.save(competition);
-			return competition.getId();
-		} catch(Exception e) {
-			e.printStackTrace();
-			return Long.valueOf(-1);
-		}
+		return competitionFacade.joinCompetition(userId, compId);
 	}
 
 	@RequestMapping(value="/competition/updateDescription/")
@@ -178,7 +104,7 @@ public class CompetitionController {
 	public ResponseEntity<String> updateDescription(Long compId,String description) {
 		Optional<Competition> competitions = null;
 		try {
-			competitions = (Optional<Competition> )competitionDAO.findById(compId);
+			competitions = competitionFacade.findById(compId);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -202,7 +128,7 @@ public class CompetitionController {
 	public ResponseEntity<String> updateEndDate(Long compId,String endDate) {
 		Optional<Competition> competitions = null;
 		try {
-			competitions = (Optional<Competition> )competitionDAO.findById(compId);
+			competitions = competitionFacade.findById(compId);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -235,7 +161,7 @@ public class CompetitionController {
 	public ResponseEntity<String> uploadFile(Long compId,@RequestParam MultipartFile fileUpload) {
 		Optional<Competition> competitions = null;
 		try {
-			competitions = (Optional<Competition> )competitionDAO.findById(compId);
+			competitions = competitionFacade.findById(compId);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -268,7 +194,7 @@ public class CompetitionController {
 	public ResponseEntity<String> getCompetitionCriteria(Long compId) {
 		Optional<Competition> competitions = null;
 		try {
-			competitions = (Optional<Competition> )competitionDAO.findById(compId);
+			competitions = competitionFacade.findById(compId);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -305,8 +231,8 @@ public class CompetitionController {
 		Optional<Competition> competitions = null;
 		Optional<User> users = null;
 		try {
-			users = (Optional<User>)userDAO.findById(userId);
-			competitions = (Optional<Competition> )competitionDAO.findById(compId);
+			users = competitionFacade.findUserById(userId);
+			competitions = competitionFacade.findById(compId);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -320,8 +246,7 @@ public class CompetitionController {
 						submission.getCompetition().getId().equals(compId)) {
 					Set<UploadSubmission> uploadedSubmission = submission.getUploadedSubmissions();
 					uploadedSubmission.add(new UploadSubmission(submission,fileUpload.getBytes() ,new Date(),Long.valueOf(-1)));
-					submissionDAO.save(submission);
-					return submission.getId();
+					return competitionFacade.saveSubmission(submission);
 				}
 			}
 		} catch(Exception e) {
@@ -331,7 +256,60 @@ public class CompetitionController {
 		return Long.valueOf(-1);
 	}
 
-/**
+	@RequestMapping(value="/competition/updateScore/")
+	@ResponseBody
+	public Long updateScore(Long userId,Long compId,Long score) {
+		Optional<Competition> competitions = null;
+		Optional<User> users = null;
+		try {
+			users =competitionFacade.findUserById(userId);
+			competitions = competitionFacade.findById(compId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		Competition competition = null;
+		User user = null;
+		if(users.isPresent() && competitions.isPresent()) {
+			competition = competitions.get();
+			user= users.get();
+		} else {
+			return Long.valueOf(-1);
+		}
+		Submission targetSubmission = null;
+		for(Submission submission:competition.getCompetitionUserSubmissions()) {
+			if(submission.getUser().getId().equals(userId) &&
+					submission.getCompetition().getId().equals(compId)) {
+				targetSubmission = submission;
+			}
+		}
+		if(targetSubmission == null) {
+			return Long.valueOf(-1);
+		} else {
+			Set<UploadSubmission> targetUploads = targetSubmission.getUploadedSubmissions();
+			if(targetUploads == null || targetUploads.size() <=0) {
+				return Long.valueOf(-1);
+			}
+			List<UploadSubmission> targetUploadList = new ArrayList<UploadSubmission>(targetUploads);
+			targetUploadList = sortUploadSubmission(targetUploadList);
+			UploadSubmission targetUpload = targetUploadList.get(0);
+			targetUpload.setScore(score);
+			competitionFacade.save(competition);
+			return targetUpload.getId();
+		}
+	}
+
+	public List<UploadSubmission> sortUploadSubmission(List<UploadSubmission> criteriaList){
+		if(criteriaList.size() >1) {
+			Collections.sort(criteriaList,new Comparator<UploadSubmission>(){
+				@Override
+				public int compare(UploadSubmission a, UploadSubmission b) {
+					return b.getUploadTime().compareTo(a.getUploadTime());
+				}
+			});
+		}
+		return criteriaList;
+	}
+	/**
 	@RequestMapping(value="/competition/evaluateSubmission/")
 	@ResponseBody
 	public Long evaluateSubmission(Long userId,Long compId) {
@@ -436,57 +414,5 @@ public class CompetitionController {
 		return Long.valueOf(-1);
 	}
 	*/
-	@RequestMapping(value="/competition/updateScore/")
-	@ResponseBody
-	public Long updateScore(Long userId,Long compId,Long score) {
-		Optional<Competition> competitions = null;
-		Optional<User> users = null;
-		try {
-			users = (Optional<User>)userDAO.findById(userId);
-			competitions = (Optional<Competition> )competitionDAO.findById(compId);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		Competition competition = null;
-		User user = null;
-		if(users.isPresent() && competitions.isPresent()) {
-			competition = competitions.get();
-			user= users.get();
-		} else {
-			return Long.valueOf(-1);
-		}
-		Submission targetSubmission = null;
-		for(Submission submission:competition.getCompetitionUserSubmissions()) {
-			if(submission.getUser().getId().equals(userId) &&
-					submission.getCompetition().getId().equals(compId)) {
-				targetSubmission = submission;
-			}
-		}
-		if(targetSubmission == null) {
-			return Long.valueOf(-1);
-		} else {
-			Set<UploadSubmission> targetUploads = targetSubmission.getUploadedSubmissions();
-			if(targetUploads == null || targetUploads.size() <=0) {
-				return Long.valueOf(-1);
-			}
-			List<UploadSubmission> targetUploadList = new ArrayList<UploadSubmission>(targetUploads);
-			targetUploadList = sortUploadSubmission(targetUploadList);
-			UploadSubmission targetUpload = targetUploadList.get(0);
-			targetUpload.setScore(score);
-			competitionFacade.save(competition);
-			return targetUpload.getId();
-		}
-	}
 
-	public List<UploadSubmission> sortUploadSubmission(List<UploadSubmission> criteriaList){
-		if(criteriaList.size() >1) {
-			Collections.sort(criteriaList,new Comparator<UploadSubmission>(){
-				@Override
-				public int compare(UploadSubmission a, UploadSubmission b) {
-					return b.getUploadTime().compareTo(a.getUploadTime());
-				}
-			});
-		}
-		return criteriaList;
-	}
 }

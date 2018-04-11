@@ -1,14 +1,11 @@
 package com.ooad.InClassComp.ui;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ooad.InClassComp.model.User;
-import com.ooad.InClassComp.service.UserFacade;
 import com.ooad.InClassComp.service.UserServiceFactory;
 import com.ooad.InClassComp.ui.model.ResponseEntity;
 import com.ooad.InClassComp.ui.model.SignUpUser;
@@ -17,9 +14,6 @@ import com.ooad.InClassComp.ui.model.SignUpUser;
 @Controller
 public class SignUpController {
 	
-	@Autowired
-	private UserFacade userFacade;
-
 	@RequestMapping(value="/register/User", method=RequestMethod.POST)
 	public String createUser(@ModelAttribute SignUpUser signUpUser,Model model) {
 		ResponseEntity response = new ResponseEntity();
