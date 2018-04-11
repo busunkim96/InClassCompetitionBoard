@@ -91,5 +91,8 @@ public class UploadSubmission {
 	public UploadSubmission() {
 		super();
 	}
+	public Long getId() {
+		return id;
+	}
 	
 }
