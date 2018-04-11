@@ -16,6 +16,11 @@ public class UserServiceFactory {
 		user.setPassword(signUpUser.getPassword());
 		user.setAccepted(Boolean.FALSE);
 		user.setType(signUpUser.getType());
-		userFacade.saveUser(user);
+		try {
+			userFacade.saveUser(user);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
 }
