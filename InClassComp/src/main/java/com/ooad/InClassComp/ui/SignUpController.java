@@ -1,5 +1,6 @@
 package com.ooad.InClassComp.ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,11 +17,14 @@ import com.ooad.InClassComp.ui.model.SignUpUser;
 @CrossOrigin
 public class SignUpController {
 	
+	@Autowired
+	UserServiceFactory userFactory;
+	
 	@RequestMapping(value="/register/User", method=RequestMethod.POST)
 	public String createUser(@ModelAttribute SignUpUser signUpUser,Model model) {
 		ResponseEntity response = new ResponseEntity();
 		try {
-			UserServiceFactory.createUser(signUpUser);
+			userFactory.createUser(signUpUser);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
