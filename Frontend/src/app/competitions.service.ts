@@ -21,12 +21,12 @@ export class CompetitionsService {
   private heroesUrl = 'http://localhost:8080/competition/getAll';  // URL to web api
 
   getCompetitions(): Observable<Competition[]> {
-  	return this.http.get<Competition[]>(this.heroesUrl);
+    return this.http.get<Competition[]>(this.heroesUrl);
   }
 
    getCompetition(id: number): Observable<Competition> {
 
-  	return of (COMPETITIONS.find(competition => competition.id === id));
+    return of (COMPETITIONS.find(competition => competition.id === id));
   }
 
 }

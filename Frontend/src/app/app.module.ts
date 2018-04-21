@@ -12,6 +12,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { CreateCompetitionComponent } from './create-competition/create-competition.component';
 import { ViewCompetitionComponent } from './view-competition/view-competition.component';
 import { UsersComponent } from './users/users.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { UsersComponent } from './users/users.component';
     CompetitionListComponent,
     CreateCompetitionComponent,
     ViewCompetitionComponent,
-    UsersComponent
+    UsersComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

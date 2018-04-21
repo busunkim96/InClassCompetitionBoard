@@ -11,7 +11,7 @@ import { UserService } from '../user.service';
 
 export class UsersComponent implements OnInit {
 
- 
+
 //  users = [
 //     { name: 'Amy Waters',  selected: true, id: 12 },
 //      { name: 'Charles Sannes',  selected: false, id: 2},
@@ -28,25 +28,28 @@ export class UsersComponent implements OnInit {
   }
 
   approveUsers() {
-  	const selected = this.unapprovedUsers.filter(u => u.selected);
+    const selected = this.unapprovedUsers.filter(u => u.selected);
     console.log(selected);
+    const selectedIds = selected.map(u => u.userid);
+    console.log(selectedIds);
+    this.userService.acceptUsers(selectedIds);
 
 
   }
 
   getUsersToBeApproved(): void {
   	this.userService.getUsers()
-  		.subscribe(u => this.unapprovedUsers = u.filter(u => !u.selected))
+  		.subscribe(u => this.unapprovedUsers = u.filter(u => !u.selected));
 
   }
 
   getApprovedUsers(): void {
 
   	this.userService.getUsers()
-  		.subscribe(u => this.approvedUsers = u.filter(u => u.selected))
+  		.subscribe(u => this.approvedUsers = u.filter(u => u.selected));
   }
 
- 
+
 
 
 

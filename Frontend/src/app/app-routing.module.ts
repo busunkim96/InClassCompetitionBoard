@@ -4,13 +4,15 @@ import { CompetitionListComponent } from './competition-list/competition-list.co
 import { CreateCompetitionComponent } from './create-competition/create-competition.component';
 import { ViewCompetitionComponent } from './view-competition/view-competition.component';
 import { UsersComponent } from './users/users.component';
+import {RegisterComponent} from './register/register.component';
 
 const routes: Routes = [
-	{ path: 'competitionList', component: CompetitionListComponent },
-	{ path: '', redirectTo: '/competitionList', pathMatch: 'full'},
-	{ path: 'createCompetition', component: CreateCompetitionComponent},
-	{ path: 'viewCompetition/:id', component: ViewCompetitionComponent},
-	{ path: 'viewUsers', component: UsersComponent}
+{ path: 'competitionList', component: CompetitionListComponent },
+{ path: '', redirectTo: '/competitionList', pathMatch: 'full'},
+{ path: 'createCompetition', component: CreateCompetitionComponent},
+{ path: 'viewCompetition/:id', component: ViewCompetitionComponent},
+{ path: 'viewUsers', component: UsersComponent},
+{ path: 'register', component: RegisterComponent}
 
 ];
 

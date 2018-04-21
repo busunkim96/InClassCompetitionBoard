@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.ooad.InClassComp</OriginalElement>
+  <nodes>
+    <node x="169.7927289377294" y="1708.5">com.ooad.InClassComp.model.UserType</node>
+    <node x="2094.1875" y="1974.0">com.ooad.InClassComp.ui.CompetitionController</node>
+    <node x="47.5" y="818.0">com.ooad.InClassComp.doa.CompetitionDAO</node>
+    <node x="1920.0351465201475" y="1641.0">com.ooad.InClassComp.service.CompetitionFacade</node>
+    <node x="1524.5351465201475" y="2123.0">com.ooad.InClassComp.service.UserFacadeImpl</node>
+    <node x="1526.2177289377296" y="2528.0">com.ooad.InClassComp.ui.SignUpController</node>
+    <node x="1286.9321703296714" y="0.0">com.ooad.InClassComp.model.TestCriteria</node>
+    <node x="266.21014652014765" y="2001.5">com.ooad.InClassComp.service.CompetitionFacadeImpl</node>
+    <node x="1134.2321703296714" y="315.0">com.ooad.InClassComp.model.Competition</node>
+    <node x="1556.2177289377296" y="2414.0">com.ooad.InClassComp.service.UserServiceFactory</node>
+    <node x="1211.281547619048" y="1145.0">com.ooad.InClassComp.model.User</node>
+    <node x="1393.7030036630044" y="790.0">com.ooad.InClassComp.model.Submission</node>
+    <node x="1042.6601465201475" y="1695.0">com.ooad.InClassComp.doa.UserDAO</node>
+    <node x="864.5351465201475" y="2095.5">com.ooad.InClassComp.ui.AdminController</node>
+    <node x="471.16014652014746" y="1321.0">com.ooad.InClassComp.doa.SubmissionDAO</node>
+    <node x="1585.2321703296716" y="369.0">com.ooad.InClassComp.model.UploadSubmission</node>
+    <node x="1225.5351465201475" y="2109.5">com.ooad.InClassComp.ui.LoginController</node>
+    <node x="1642.5351465201475" y="1735.5">com.ooad.InClassComp.service.UserFacade</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacadeImpl" target="com.ooad.InClassComp.doa.CompetitionDAO">
+      <point x="-79.20000000000027" y="-167.5" />
+      <point x="451.0101465201474" y="1924.0" />
+      <point x="346.5" y="1924.0" />
+      <point x="0.0" y="99.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.model.User" target="com.ooad.InClassComp.model.Submission">
+      <point x="85.85714285714289" y="-208.0" />
+      <point x="1597.6386904761912" y="1125.0" />
+      <point x="1602.1530036630047" y="1125.0" />
+      <point x="18.950000000000045" y="127.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.doa.UserDAO" target="com.ooad.InClassComp.model.User">
+      <point x="0.0" y="-72.5" />
+      <point x="1207.6601465201475" y="1621.0" />
+      <point x="1361.531547619048" y="1621.0" />
+      <point x="-150.25" y="208.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.UserServiceFactory" target="com.ooad.InClassComp.model.User">
+      <point x="-103.125" y="-32.0" />
+      <point x="1590.5927289377296" y="2394.0" />
+      <point x="1514.0351465201475" y="2394.0" />
+      <point x="1514.0351465201475" y="1621.0" />
+      <point x="1481.7315476190483" y="1621.0" />
+      <point x="-30.049999999999955" y="208.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.model.Submission" target="com.ooad.InClassComp.model.Competition">
+      <point x="-132.64999999999986" y="-127.5" />
+      <point x="1450.5530036630048" y="740.0" />
+      <point x="1367.6905036630046" y="740.0" />
+      <point x="17.958333333333258" y="167.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.doa.SubmissionDAO" target="com.ooad.InClassComp.model.Submission">
+      <point x="0.0" y="-32.0" />
+      <point x="637.6601465201475" y="1095.0" />
+      <point x="1450.5530036630046" y="1095.0" />
+      <point x="-132.64999999999998" y="127.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.UserServiceFactory" target="com.ooad.InClassComp.service.UserFacadeImpl">
+      <point x="-34.375" y="-32.0" />
+      <point x="1659.3427289377296" y="2394.0" />
+      <point x="1632.0351465201475" y="2394.0" />
+      <point x="0.0" y="46.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacadeImpl" target="com.ooad.InClassComp.model.Submission">
+      <point x="79.19999999999982" y="-167.5" />
+      <point x="609.4101465201475" y="1924.0" />
+      <point x="851.3065476190483" y="1924.0" />
+      <point x="851.3065476190483" y="1105.0" />
+      <point x="1488.4530036630044" y="1105.0" />
+      <point x="-94.75" y="127.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.UserFacadeImpl" target="com.ooad.InClassComp.doa.UserDAO">
+      <point x="-71.66666666666674" y="-46.0" />
+      <point x="1560.3684798534807" y="1934.0" />
+      <point x="1331.4101465201475" y="1934.0" />
+      <point x="123.75" y="72.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.LoginController" target="com.ooad.InClassComp.doa.UserDAO">
+      <point x="-69.5" y="-59.5" />
+      <point x="1295.0351465201475" y="1944.0" />
+      <point x="1248.9101465201475" y="1944.0" />
+      <point x="41.25" y="72.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.CompetitionController" target="com.ooad.InClassComp.model.Submission">
+      <point x="-124.875" y="-195.0" />
+      <point x="2302.3125" y="1934.0" />
+      <point x="2458.5351465201475" y="1934.0" />
+      <point x="2458.5351465201475" y="1095.0" />
+      <point x="1753.7530036630046" y="1095.0" />
+      <point x="170.54999999999995" y="127.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.UserFacadeImpl" target="com.ooad.InClassComp.model.User">
+      <point x="0.0" y="-46.0" />
+      <point x="1632.0351465201475" y="1621.0" />
+      <point x="1541.8315476190483" y="1621.0" />
+      <point x="30.050000000000182" y="208.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacadeImpl" target="com.ooad.InClassComp.model.Competition">
+      <point x="-237.60000000000014" y="-167.5" />
+      <point x="292.6101465201475" y="1954.0" />
+      <point x="26.0" y="1954.0" />
+      <point x="26.0" y="750.0" />
+      <point x="1152.1905036630046" y="750.0" />
+      <point x="-197.54166666666674" y="167.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacade" target="com.ooad.InClassComp.model.User">
+      <point x="-176.0" y="-126.5" />
+      <point x="2008.0351465201475" y="1581.0" />
+      <point x="1782.2315476190483" y="1581.0" />
+      <point x="270.4500000000003" y="208.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacadeImpl" target="com.ooad.InClassComp.model.UserType">
+      <point x="-132.0" y="-167.5" />
+      <point x="398.21014652014765" y="1934.0" />
+      <point x="231.7927289377294" y="1934.0" />
+      <point x="0.0" y="59.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.AdminController" target="com.ooad.InClassComp.model.User">
+      <point x="-85.25" y="-73.5" />
+      <point x="949.7851465201475" y="1934.0" />
+      <point x="967.9101465201475" y="1934.0" />
+      <point x="967.9101465201475" y="1611.0" />
+      <point x="1301.4315476190482" y="1611.0" />
+      <point x="-210.35000000000002" y="208.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.UserServiceFactory" target="com.ooad.InClassComp.service.UserFacade">
+      <point x="34.375" y="-32.0" />
+      <point x="1728.0927289377296" y="2384.0" />
+      <point x="1803.7851465201475" y="2384.0" />
+      <point x="53.75" y="32.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.CompetitionController" target="com.ooad.InClassComp.model.User">
+      <point x="-291.375" y="-195.0" />
+      <point x="2135.8125" y="1944.0" />
+      <point x="1909.5351465201475" y="1944.0" />
+      <point x="1909.5351465201475" y="1591.0" />
+      <point x="1722.1315476190484" y="1591.0" />
+      <point x="210.35000000000014" y="208.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.model.Competition" target="com.ooad.InClassComp.model.User">
+      <point x="-89.79166666666674" y="167.5" />
+      <point x="1259.9405036630046" y="770.0" />
+      <point x="1372.2030036630044" y="770.0" />
+      <point x="1372.2030036630044" y="1065.0" />
+      <point x="1254.2101190476196" y="1065.0" />
+      <point x="-257.57142857142844" y="-208.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.model.UploadSubmission" target="com.ooad.InClassComp.model.Submission">
+      <point x="0.0" y="113.5" />
+      <point x="1796.7321703296716" y="760.0" />
+      <point x="1715.8530036630045" y="760.0" />
+      <point x="132.6500000000001" y="-127.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.CompetitionController" target="com.ooad.InClassComp.model.UploadSubmission">
+      <point x="41.625" y="-195.0" />
+      <point x="2468.8125" y="1954.0" />
+      <point x="2541.0625" y="1954.0" />
+      <point x="2541.0625" y="680.0" />
+      <point x="1917.5893131868143" y="680.0" />
+      <point x="120.85714285714278" y="113.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.CompetitionController" target="com.ooad.InClassComp.model.TestCriteria">
+      <point x="208.1250000000001" y="-195.0" />
+      <point x="2635.3125" y="1954.0" />
+      <point x="2563.0625" y="1954.0" />
+      <point x="2563.0625" y="285.0" />
+      <point x="1521.0750274725285" y="285.0" />
+      <point x="85.14285714285711" y="127.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacade" target="com.ooad.InClassComp.model.Submission">
+      <point x="0.0" y="-126.5" />
+      <point x="2184.0351465201475" y="1621.0" />
+      <point x="2234.026318681319" y="1621.0" />
+      <point x="2234.026318681319" y="1105.0" />
+      <point x="1715.8530036630045" y="1105.0" />
+      <point x="132.64999999999986" y="127.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.model.Submission" target="com.ooad.InClassComp.model.User">
+      <point x="56.84999999999991" y="127.5" />
+      <point x="1640.0530036630043" y="1125.0" />
+      <point x="1683.4958333333338" y="1125.0" />
+      <point x="171.71428571428578" y="-208.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.model.Competition" target="com.ooad.InClassComp.model.TestCriteria">
+      <point x="-172.39999999999986" y="-167.5" />
+      <point x="1177.3321703296715" y="275.0" />
+      <point x="1308.2178846153856" y="275.0" />
+      <point x="-127.71428571428578" y="127.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.model.TestCriteria" target="com.ooad.InClassComp.model.Competition">
+      <point x="0.0" y="127.5" />
+      <point x="86.20000000000005" y="-167.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacadeImpl" target="com.ooad.InClassComp.service.CompetitionFacade">
+      <point x="237.5999999999999" y="-167.5" />
+      <point x="767.8101465201476" y="1954.0" />
+      <point x="2052.0351465201475" y="1954.0" />
+      <point x="-132.0" y="126.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.model.Submission" target="com.ooad.InClassComp.model.UploadSubmission">
+      <point x="18.950000000000045" y="-127.5" />
+      <point x="1602.1530036630047" y="770.0" />
+      <point x="1615.4464560439571" y="770.0" />
+      <point x="-181.28571428571433" y="113.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.model.Competition" target="com.ooad.InClassComp.model.Submission">
+      <point x="53.875" y="167.5" />
+      <point x="1403.6071703296714" y="730.0" />
+      <point x="1488.4530036630047" y="730.0" />
+      <point x="-94.74999999999989" y="-127.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.SignUpController" target="com.ooad.InClassComp.service.UserServiceFactory">
+      <point x="0.0" y="-45.5" />
+      <point x="0.0" y="32.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.UserFacadeImpl" target="com.ooad.InClassComp.service.UserFacade">
+      <point x="71.66666666666674" y="-46.0" />
+      <point x="1703.7018131868142" y="1944.0" />
+      <point x="1696.2851465201475" y="1944.0" />
+      <point x="-53.75" y="32.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.CompetitionController" target="com.ooad.InClassComp.model.Competition">
+      <point x="-41.625" y="-195.0" />
+      <point x="2385.5625" y="1944.0" />
+      <point x="2469.5351465201475" y="1944.0" />
+      <point x="2469.5351465201475" y="690.0" />
+      <point x="1547.2738369963379" y="690.0" />
+      <point x="197.54166666666652" y="167.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.doa.CompetitionDAO" target="com.ooad.InClassComp.model.Competition">
+      <point x="0.0" y="-99.5" />
+      <point x="346.5" y="770.0" />
+      <point x="1224.023836996338" y="770.0" />
+      <point x="-125.70833333333326" y="167.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.UserFacade" target="com.ooad.InClassComp.model.User">
+      <point x="0.0" y="-32.0" />
+      <point x="1750.0351465201475" y="1611.0" />
+      <point x="1601.9315476190482" y="1611.0" />
+      <point x="90.15000000000009" y="208.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.CompetitionController" target="com.ooad.InClassComp.service.CompetitionFacade">
+      <point x="-208.125" y="-195.0" />
+      <point x="2219.0625" y="1924.0" />
+      <point x="2316.0351465201475" y="1924.0" />
+      <point x="132.0" y="126.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacadeImpl" target="com.ooad.InClassComp.doa.SubmissionDAO">
+      <point x="26.40000000000009" y="-167.5" />
+      <point x="556.6101465201477" y="1914.0" />
+      <point x="637.6601465201475" y="1914.0" />
+      <point x="0.0" y="32.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacade" target="com.ooad.InClassComp.model.Competition">
+      <point x="176.0" y="-126.5" />
+      <point x="2360.0351465201475" y="1621.0" />
+      <point x="2277.2714010989007" y="1621.0" />
+      <point x="2277.2714010989007" y="700.0" />
+      <point x="1511.3571703296714" y="700.0" />
+      <point x="161.625" y="167.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.AdminController" target="com.ooad.InClassComp.doa.UserDAO">
+      <point x="85.25" y="-73.5" />
+      <point x="1120.2851465201475" y="1944.0" />
+      <point x="1166.4101465201475" y="1944.0" />
+      <point x="-41.25" y="72.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacadeImpl" target="com.ooad.InClassComp.model.User">
+      <point x="132.0" y="-167.5" />
+      <point x="662.2101465201476" y="1934.0" />
+      <point x="862.3065476190483" y="1934.0" />
+      <point x="862.3065476190483" y="1601.0" />
+      <point x="1241.3315476190483" y="1601.0" />
+      <point x="-270.45000000000005" y="208.0" />
+    </edge>
+    <edge source="com.ooad.InClassComp.service.CompetitionFacadeImpl" target="com.ooad.InClassComp.doa.UserDAO">
+      <point x="184.80000000000018" y="-167.5" />
+      <point x="715.0101465201478" y="1944.0" />
+      <point x="1083.9101465201475" y="1944.0" />
+      <point x="-123.75" y="72.5" />
+    </edge>
+    <edge source="com.ooad.InClassComp.ui.LoginController" target="com.ooad.InClassComp.model.User">
+      <point x="69.5" y="-59.5" />
+      <point x="1434.0351465201475" y="1944.0" />
+      <point x="1431.6601465201475" y="1944.0" />
+      <point x="1431.6601465201475" y="1621.0" />
+      <point x="1421.631547619048" y="1621.0" />
+      <point x="-90.15000000000009" y="208.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="1830.4999999999998" y="1342.1666666666665" />
+  <SelectedNodes>
+    <node>com.ooad.InClassComp.ui.CompetitionController</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

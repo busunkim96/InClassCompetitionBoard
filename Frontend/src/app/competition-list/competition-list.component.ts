@@ -15,12 +15,12 @@ export class CompetitionListComponent implements OnInit {
   competitions: Competition[];
 
   getCompetitions(): void {
-  	this.competitionsService.getCompetitions()
-      .subscribe(competitions => this.competitions = competitions)
+    this.competitionsService.getCompetitions()
+      .subscribe(competitions => this.competitions = competitions);
   }
 
   ngOnInit() {
-  	this.getCompetitions();
+   this.getCompetitions();
   }
 
 

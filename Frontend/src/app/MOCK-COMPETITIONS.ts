@@ -1,7 +1,7 @@
 import { Competition } from './competition';
 
 export const COMPETITIONS: Competition[] = [
- {id: 1, name: 'Week 1 Comp', className: 'CSCI 1300', professorName: 'David Knox', description: 'Please see the pdf on moodle for more info.', joined: true}, 
- {id: 2, name: 'Robotics Club 3/24', className: 'Robotics Club', professorName: 'Ally Boseman', description: 'Robotics Club exercise for 3/24', joined: false}, 
- {id: 3, name: 'Test Exam', className: 'CSCI 2270', professorName: 'Elle Boese', description: 'Testing out exam questions', joined: false}
+ {id: 1, competitionName: 'Week 1 Comp', className: 'CSCI 1300',  joined: true},
+ {id: 2, competitionName: 'Robotics Club 3/24', className: 'Robotics Club', joined: false},
+ {id: 3, competitionName: 'Test Exam', className: 'CSCI 2270', joined: false}
 ];
