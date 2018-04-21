@@ -13,6 +13,7 @@ import { CreateCompetitionComponent } from './create-competition/create-competit
 import { ViewCompetitionComponent } from './view-competition/view-competition.component';
 import { UsersComponent } from './users/users.component';
 import { RegisterComponent } from './register/register.component';
+import {SignupService} from './signup.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { RegisterComponent } from './register/register.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [CompetitionsService, UserService],
+  providers: [CompetitionsService, UserService, SignupService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
