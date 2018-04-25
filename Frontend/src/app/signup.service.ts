@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { SignUpUser} from './sign-up-user';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {stringify} from 'querystring';
 
 
 const options = {
@@ -20,5 +19,10 @@ export class SignupService {
     const params = new HttpParams().set('userName', user.username).set('email', user.username).set('password', user.password).set('type', String(user.type));
     return this.http.post(this.url, params);
   }
+
+  loginUser(user: SignUpUser): Observable<{}> {
+  const params = new HttpParams().set('userName', user.username).set('password', user.password);
+  return this.http.post('http://localhost:8080/login/User', params);
+}
 
 }

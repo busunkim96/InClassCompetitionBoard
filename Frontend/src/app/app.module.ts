@@ -14,6 +14,7 @@ import { ViewCompetitionComponent } from './view-competition/view-competition.co
 import { UsersComponent } from './users/users.component';
 import { RegisterComponent } from './register/register.component';
 import {SignupService} from './signup.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {SignupService} from './signup.service';
     CreateCompetitionComponent,
     ViewCompetitionComponent,
     UsersComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

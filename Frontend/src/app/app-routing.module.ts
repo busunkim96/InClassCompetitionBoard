@@ -5,6 +5,7 @@ import { CreateCompetitionComponent } from './create-competition/create-competit
 import { ViewCompetitionComponent } from './view-competition/view-competition.component';
 import { UsersComponent } from './users/users.component';
 import {RegisterComponent} from './register/register.component';
+import {LoginComponent} from './login/login.component';
 
 const routes: Routes = [
 { path: 'competitionList', component: CompetitionListComponent },
@@ -12,7 +13,8 @@ const routes: Routes = [
 { path: 'createCompetition', component: CreateCompetitionComponent},
 { path: 'viewCompetition/:id', component: ViewCompetitionComponent},
 { path: 'viewUsers', component: UsersComponent},
-{ path: 'register', component: RegisterComponent}
+{ path: 'register', component: RegisterComponent},
+  {path: 'login', component: LoginComponent}
 
 ];
 
