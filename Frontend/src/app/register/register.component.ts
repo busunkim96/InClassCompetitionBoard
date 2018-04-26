@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class RegisterComponent {
 
-  model = new SignUpUser('', '', 2, '');
+  model = new SignUpUser('', '', 2, '' );
   submitted = false;
 
   constructor(private signupService: SignupService, private router: Router) { }

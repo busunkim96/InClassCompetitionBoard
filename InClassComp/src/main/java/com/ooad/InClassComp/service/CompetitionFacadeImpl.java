@@ -56,7 +56,7 @@ public class CompetitionFacadeImpl implements CompetitionFacade {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		DateFormat format = new SimpleDateFormat("MM-DD-yyyy", Locale.ENGLISH);
+		DateFormat format = new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH);
 		Date endD = null;
 		try {
 			if(endDate != null) {

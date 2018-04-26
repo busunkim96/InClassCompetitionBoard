@@ -22,7 +22,7 @@ export class SignupService {
   }
 
   loginUser(user: SignUpUser): Observable<{}> {
-  const params = new HttpParams().set('userName', user.username).set('password', user.password);
+  const params = new HttpParams().set('userName', user.username).set('password', user.password).set('type', '' + user.type);
   return this.http.post('http://localhost:8080/login/User', params);
 }
 

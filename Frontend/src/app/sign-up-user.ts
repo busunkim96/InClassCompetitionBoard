@@ -3,7 +3,7 @@ export class SignUpUser {
     public username: string,
     public email: string,
     public type: number,
-    public password: string,
+    public password: string
   ) {}
 
 }

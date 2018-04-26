@@ -140,7 +140,7 @@ public class CompetitionController {
 		}
 		competition = competitions.get(); 
 		try {
-			DateFormat format = new SimpleDateFormat("MM-DD-yyyy", Locale.ENGLISH);
+			DateFormat format = new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH);
 			Date endD = null;
 			try {
 				if(endDate != null) {
@@ -158,9 +158,11 @@ public class CompetitionController {
 		}
 	}
 
+
 	@RequestMapping(value="/competition/uploadFile/")
-	@ResponseBody
-	public ResponseEntity<String> uploadFile(Long compId,@RequestParam MultipartFile fileUpload) {
+    @ResponseBody
+    public ResponseEntity<String> uploadFile(Long compId, MultipartFile fileUpload) {
+        System.out.println(fileUpload);
 		Optional<Competition> competitions = null;
 		try {
 			competitions = competitionFacade.findById(compId);
@@ -174,6 +176,7 @@ public class CompetitionController {
 		competition = competitions.get(); 
 		try {
 			if (fileUpload != null) {
+			    System.out.println("file content recieved");
 				TestCriteria uploadFile = new TestCriteria();
 				uploadFile.setCompetition(competition);
 				uploadFile.setFileName(fileUpload.getOriginalFilename());

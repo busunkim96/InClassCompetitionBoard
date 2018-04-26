@@ -1,14 +1,43 @@
 <app-header></app-header>
-<form>
-  <div>
-    <label for="name">Competition Name: </label>
-    <input type="text" id="name" name="name">
-  </div>
-  <div>
-  	<label for="file">Test Case File: </label>
-    <input type="file" id="testCase" name="testCase">
-  </div>
-  <div>
-    <button>Submit</button>
-  </div>
-</form>
+
+  <form (ngSubmit)="onSubmit()" #createCompetition="ngForm">
+    <div class="container">
+      <h1>Create Competition</h1>
+
+      <p class="alert alert-success" *ngIf="success != null">{{success}}</p>
+    <div class="form-group">
+      <label for="competitionName">Competition Name</label>
+      <input type="text" class="form-control" id="competitionName"
+             required [(ngModel)]="model.competitionName" name="competitionName">
+    </div>
+
+    <div class="form-group">
+      <label for="className">class Name</label>
+      <input type="text" class="form-control" id="className"
+             required [(ngModel)]="model.className" name="className">
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">End Date</label>
+      <input type="date" class="form-control" id="endDate"
+             required [(ngModel)]="model.endDate" name="endDate">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" class="form-control" id="description" maxlength="400"
+             required [(ngModel)]="model.description" name="description">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Upload test file</label>
+      <input type="file" class="form-control" id="testcase" maxlength="400"
+             required [(ngModel)]="model.testcase"  (change)="onFileChange(file.files)" name="testcase" #file>
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="reset" class="btn">Reset</button>
+
+
+    </div>
+  </form>
+

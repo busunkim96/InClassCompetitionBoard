@@ -1,20 +1,30 @@
-<p *ngIf="error">Your username or password are incorrect.</p>
-
 <div class="container">
-  <h1>Login Form</h1>
+  <h1>Login </h1>
   <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-
+    <div *ngIf="error">
+      <div class="alert alert-danger">
+        Invalid credentials
+      </div>
+    </div>
     <div class="form-group">
-      <label for="username">username</label>
+      <label for="username">User Name</label>
       <input type="text" class="form-control" id="username"
              required [(ngModel)]="model.username" name="username">
-    </div>
+       </div>
 
     <div class="form-group">
-      <label for="password">password</label>
-      <input type="text" class="form-control" id="password"
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password"
              required [(ngModel)]="model.password" name="password">
+
     </div>
+    <div class="form-group">
+      <label for="type">User Type</label>
+      <select class="form-control" id="type" required name="type" [(ngModel)]="model.type">
+        <option [value]="1" [(ngModel)]="model.type">Student</option>
+        <option [value]="2" [(ngModel)]="model.type">Faculty</option></select>
+    </div>
+
 
 
     <button type="submit" class="btn btn-success">Submit</button>

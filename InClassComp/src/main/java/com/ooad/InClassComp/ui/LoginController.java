@@ -32,7 +32,7 @@ public class LoginController {
 				return null;
 			} else  {
 				User user = users.get(0);
-				if(user.getPassword().equals(userDetails.getPassword())) {
+				if(user.getPassword().equals(userDetails.getPassword()) && userDetails.getType().equals(user.getType())) {
 					return user;
 				} else {
 					com.ooad.InClassComp.ui.model.ResponseEntity response  = new com.ooad.InClassComp.ui.model.ResponseEntity();

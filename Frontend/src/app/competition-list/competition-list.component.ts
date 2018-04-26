@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { Competition } from '../competition';
 import { CompetitionsService } from '../competitions.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { CompetitionsService } from '../competitions.service';
 })
 export class CompetitionListComponent implements OnInit {
 
-  constructor(private competitionsService: CompetitionsService) { }
+  constructor(private competitionsService: CompetitionsService, private router : Router) { }
 
   competitions: Competition[];
 
@@ -20,6 +21,9 @@ export class CompetitionListComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(localStorage.getItem('user') == null){
+      this.router.navigateByUrl('/home');
+    }
    this.getCompetitions();
   }
 
