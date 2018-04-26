@@ -6,16 +6,17 @@ import { ViewCompetitionComponent } from './view-competition/view-competition.co
 import { UsersComponent } from './users/users.component';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
+import {HomeComponent} from './home/home.component';
 
 const routes: Routes = [
 { path: 'competitionList', component: CompetitionListComponent },
-{ path: '', redirectTo: '/competitionList', pathMatch: 'full'},
+{ path: '', redirectTo: '/home', pathMatch: 'full'},
 { path: 'createCompetition', component: CreateCompetitionComponent},
 { path: 'viewCompetition/:id', component: ViewCompetitionComponent},
 { path: 'viewUsers', component: UsersComponent},
 { path: 'register', component: RegisterComponent},
-  {path: 'login', component: LoginComponent}
-
+{ path: 'login', component: LoginComponent},
+{ path: 'home', component: HomeComponent}
 ];
 
 @NgModule({

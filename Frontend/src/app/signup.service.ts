@@ -16,7 +16,8 @@ export class SignupService {
   private url = 'http://localhost:8080/register/User';
 
   registerUser(user: SignUpUser): Observable<{}> {
-    const params = new HttpParams().set('userName', user.username).set('email', user.username).set('password', user.password).set('type', String(user.type));
+    const params = new HttpParams().set('userName', user.username).set('email', user.username).
+    set('password', user.password).set('type', String(user.type));
     return this.http.post(this.url, params);
   }
 
