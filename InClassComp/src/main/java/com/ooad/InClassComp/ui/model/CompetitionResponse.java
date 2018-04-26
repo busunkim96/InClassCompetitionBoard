@@ -1,8 +1,10 @@
 package com.ooad.InClassComp.ui.model;
 
 import java.util.Date;
+import java.util.Iterator;
 
 import com.ooad.InClassComp.model.Competition;
+import com.ooad.InClassComp.model.TestCriteria;
 
 public class CompetitionResponse {
 
@@ -12,7 +14,7 @@ public class CompetitionResponse {
 	private Date endDate;
 	private Long id;
 	private String className;
-	
+
 	
 	public String getCompetitionName() {
 		return competitionName;
@@ -70,6 +72,7 @@ public class CompetitionResponse {
 		this.endDate = competition.getEndDate();
 		this.id = competition.getId();
 		this.className = competition.getClassName();
+
 	}
 	
 }

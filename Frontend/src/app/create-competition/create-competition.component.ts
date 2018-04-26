@@ -47,7 +47,6 @@ export class CreateCompetitionComponent implements OnInit {
     competition['endDate'] = this.model.endDate;
     competition['className'] = this.model.className;
     competition['description'] = this.model.description;
-    console.log(this.model.testcase);
     this.competitionService.createCompetition(competition).subscribe((response) => {
       if (response != null) {
         this.formData.append( 'compId', response['status']);

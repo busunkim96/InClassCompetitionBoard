@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
   isFaculty: boolean;
   isLoggedIn: boolean;
   user: {};
-  constructor(private router : Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     if (localStorage.getItem('user') != null){

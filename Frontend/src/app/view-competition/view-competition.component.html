@@ -1,19 +1,36 @@
-<strong>{{ competition.professorName | uppercase }} | {{ competition.className | uppercase }} </strong>
-<h3>
-	{{ competition.name }}
-</h3>
-<p>
-	{{competition.description}}
-</p>
+<app-header></app-header>
 
-<div *ngIf="competition.joined == true">
-	<form>
+<div class="container">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3>{{ competition.competitionName }}</h3></div>
+      <div class="panel-body">Description : {{ competition.description }} </div>
+      <div class="panel-body">Class : {{ competition.className }} </div>
+      <div class="panel-body">End Date : {{ competition.endDate }} </div>
+      <div class="panel-body">Start Date : {{ competition.startDate }} </div>
+      <div class='panel' *ngIf="isFaculty">
+      <button data-toggle="collapse" data-target="#demo">View Criteria</button>
 
-		<input type="file" name="competitionSubmission">
-		<br><input type="submit">
-	</form>
+      <div id="demo" class="collapse">
+        <pre>{{ fileContent }}</pre>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!isFaculty">
+  <div *ngIf="competition.joined == true">
+    <form>
+
+      <input type="file" name="competitionSubmission">
+      <br><input type="submit">
+    </form>
+  </div>
+
+  <div *ngIf="competition.joined == false">
+    <button (click)="joinCompetition()">Join Competition</button>
+  </div>
+
 </div>
 
-<div *ngIf="competition.joined == false">
-	<button (click)="joinCompetition()">Join Competition</button>
-</div>

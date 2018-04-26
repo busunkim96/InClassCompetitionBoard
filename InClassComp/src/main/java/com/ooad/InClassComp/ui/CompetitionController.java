@@ -95,6 +95,22 @@ public class CompetitionController {
 		return competitionResponses;
 	}
 
+    @RequestMapping(value="/competition/getById/")
+    @ResponseBody
+    public CompetitionResponse getCompetitionById(Long id) {
+        Optional<Competition> competitions = null;
+        try {
+            competitions = competitionFacade.findById(id);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        CompetitionResponse competitionResponse = null;
+        if (competitions.isPresent()) {
+            competitionResponse= new CompetitionResponse(competitions.get());
+        }
+        return competitionResponse;
+    }
+
 	@RequestMapping(value="/competition/join/")
 	@ResponseBody
 	public Long joinCompetition(Long userId,Long compId) {
@@ -196,7 +212,7 @@ public class CompetitionController {
 
 	@RequestMapping(value="/competition/getCompetitionCriteria/")
 	@ResponseBody
-	public ResponseEntity<String> getCompetitionCriteria(Long compId) {
+	public String getCompetitionCriteria(Long compId) {
 		Optional<Competition> competitions = null;
 		try {
 			competitions = competitionFacade.findById(compId);
@@ -205,17 +221,17 @@ public class CompetitionController {
 		}
 		Competition competition = null;
 		if(!competitions.isPresent()) {
-			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			return null;
 		}
 		competition = competitions.get(); 
 		try {
 			Set<TestCriteria> criteria = competition.getCompetitionCriteria();
 			List<TestCriteria> criteriaList = new ArrayList<TestCriteria>(criteria);
 			criteriaList = sortTestCriteria(criteriaList);
-			return new ResponseEntity<String>(new String((criteriaList.get(0).getData()), StandardCharsets.UTF_8),HttpStatus.OK);
+			return new String((criteriaList.get(0).getData()), StandardCharsets.UTF_8);
 		} catch(Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			return null;
 		}
 	}
 
