@@ -23,6 +23,7 @@ export class CompetitionsService {
   private createCompetitionURL = 'http://localhost:8080/competition/create';
   private uploadURL = 'http://localhost:8080/competition/uploadFile/';
   private fileURL = 'http://localhost:8080/competition/getCompetitionCriteria/?compId=';
+  private updateScoreURL = 'http://localhost:8080/competition/updateScore/';
 
   getCompetitions(): Observable<Competition[]> {
     return this.http.get<Competition[]>(this.getAll);
@@ -52,6 +53,15 @@ export class CompetitionsService {
   getFileContent(compId): Observable<string> {
     httpOptions['responseType'] = 'text';
     return this.http.get<string>(this.fileURL + '' + compId, httpOptions );
+
+  }
+  updateScore(compId, userId, score):Observable<number>{
+    let params =  new HttpParams();
+    params = params.append('compId', compId);
+    params = params.append('userId', userId);
+    params = params.append('score', score);
+    console.log(params);
+    return this.http.post<number>(this.updateScoreURL, params);
 
   }
 

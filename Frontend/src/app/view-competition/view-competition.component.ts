@@ -4,7 +4,6 @@ import { Location } from '@angular/common';
 import { CompetitionsService } from '../competitions.service';
 import { Competition } from '../competition';
 import {User} from '../user';
-import {C} from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-view-competition',
@@ -17,7 +16,9 @@ export class ViewCompetitionComponent implements OnInit {
   user: User;
   isFaculty: boolean;
   fileContent: string;
-
+  inputval: number;
+  id: number;
+  compId: number;
   constructor(
     private route: ActivatedRoute,
     private competitionsService: CompetitionsService,
@@ -58,6 +59,16 @@ export class ViewCompetitionComponent implements OnInit {
     console.log('competition ' + this.competition.id + ' joined!');
     this.competition.joined = true;
 
+  }
+  setinputval( event:any ) {
+    this.inputval = parseInt(event.target.value, 10);
+    this.id = parseInt(event.target.id, 10);
+    this.compId = this.competition.id;
+  }
+  commitChanges(event:any){
+    this.competitionsService.updateScore(this.compId,this.id,this.inputval).subscribe(res => {
+      console.log(res);
+    });
   }
 
 }

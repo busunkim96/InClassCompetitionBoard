@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div class="container">
+<div class='container'>
   <div class="panel-group">
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -10,15 +10,18 @@
       <div class="panel-body">End Date : {{ competition.endDate }} </div>
       <div class="panel-body">Start Date : {{ competition.startDate }} </div>
       <div class='panel' *ngIf="isFaculty">
-      <button data-toggle="collapse" data-target="#demo">View Criteria</button>
-
-      <div id="demo" class="collapse">
-        <pre>{{ fileContent }}</pre>
+        <button class="btn btn-submit" data-toggle="collapse" data-target="#demo">View Criteria</button>
+        <div id="demo" class="collapse">
+          <pre>{{ fileContent }}</pre>
+        </div>
       </div>
+      <div>
+
       </div>
     </div>
   </div>
 </div>
+
 <div *ngIf="!isFaculty">
   <div *ngIf="competition.joined == true">
     <form>
@@ -34,3 +37,26 @@
 
 </div>
 
+<div class="container" *ngIf="isFaculty">
+  <h3>Participant Details</h3>
+  <div id="accordion" *ngFor="let submission of competition.submissions; let i = index">
+    <div class="card">
+      <div class="card-header" id="{{'heading_'+i}}">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" [attr.data-target] = "'#collapse_'+i"  aria-expanded="true" aria-controls="collapseOne">
+            User : {{competition.userResponseList[i]['userName']}}
+          </button>
+        </h5>
+        <label style="padding-left: 12px">Score : </label>
+        <input id="{{competition.userResponseList[i]['id'] }}" value="{{submission['score']}}" name="Score" (blur)="setinputval($event)">
+        <button id ="{{'button_'+i}}" class="btn btn-submit" (click)="commitChanges($event)" > Update score for {{competition.userResponseList[i]['userName']}}</button>
+      </div>
+
+      <div id="{{'collapse_'+i}}" [attr.aria-labelledby] =  "'heading_'+i" class="collapse"  data-parent="#accordion">
+        <div class="card-body">
+          Submission : <pre>{{ submission['data'] }}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

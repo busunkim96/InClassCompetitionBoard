@@ -7,4 +7,6 @@ export class Competition {
   endDate: Date;
   description: string;
   testcase: File;
+  submissions: any;
+  userResponseList: any;
 }
