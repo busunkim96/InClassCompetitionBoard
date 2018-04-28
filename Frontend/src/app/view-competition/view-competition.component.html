@@ -24,10 +24,15 @@
 
 <div *ngIf="!isFaculty">
   <div *ngIf="competition.joined == true">
-    <form>
+    <form (ngSubmit)="onSubmit()" #uploadSubmission="ngForm">
 
-      <input type="file" name="competitionSubmission">
-      <br><input type="submit">
+      <div class="form-group">
+        <label for="submission">Upload submission</label>
+        <input type="file" class="form-control" id="submission" maxlength="400"
+               required (change)="onFileChange(file.files)" name="submission" #file>
+      </div>
+
+      <button type="submit" class="btn btn-success">Submit</button>
     </form>
   </div>
 

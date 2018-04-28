@@ -5,7 +5,6 @@ import {HttpRequest, HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@a
 
 
 
-import { COMPETITIONS } from './MOCK-COMPETITIONS';
 import { Competition } from './competition';
 import {C} from '@angular/core/src/render3';
 
@@ -24,6 +23,8 @@ export class CompetitionsService {
   private uploadURL = 'http://localhost:8080/competition/uploadFile/';
   private fileURL = 'http://localhost:8080/competition/getCompetitionCriteria/?compId=';
   private updateScoreURL = 'http://localhost:8080/competition/updateScore/';
+  private joinCompetitionURL = 'http://localhost:8080/competition/join/';
+  private uploadSubmissionURL = 'http://localhost:8080/competition/uploadSubmission/';
 
   getCompetitions(): Observable<Competition[]> {
     return this.http.get<Competition[]>(this.getAll);
@@ -42,6 +43,14 @@ export class CompetitionsService {
     console.log(params);
     return this.http.post(this.createCompetitionURL, params);
   }
+
+
+  joinCompetition(compId: number, userId: string): Observable<{}> {
+    let params = new HttpParams();
+    params = params.append('compId', String(compId)).append('userId', String(userId));
+    return this.http.post(this.joinCompetitionURL, params);
+  }
+
 
   uploadTestcase(formData) {
     const req = new HttpRequest('POST',  this.uploadURL, formData, {
@@ -63,6 +72,18 @@ export class CompetitionsService {
     console.log(params);
     return this.http.post<number>(this.updateScoreURL, params);
 
+  }
+
+  uploadSubmission(compId, userId, formData): Observable <{}> {
+    let params = new HttpParams();
+    params = params.append('compId', compId);
+    params = params.append('userId', userId);
+    const req = new HttpRequest('POST',  this.uploadSubmissionURL, formData, {
+      reportProgress: true,
+      params: params
+    });
+
+    return this.http.request(req);
   }
 
 }

@@ -19,6 +19,8 @@ export class ViewCompetitionComponent implements OnInit {
   inputval: number;
   id: number;
   compId: number;
+  formData: FormData;
+
   constructor(
     private route: ActivatedRoute,
     private competitionsService: CompetitionsService,
@@ -38,13 +40,19 @@ export class ViewCompetitionComponent implements OnInit {
     }
     this.getCompetition();
     this.getFileContent();
+    this.formData = new FormData();
   }
 
   getCompetition(): void {
   	const id = +this.route.snapshot.paramMap.get('id');
   	this.competitionsService.getCompetition(id)
-  		.subscribe(competition => this.competition = competition);
+  		.subscribe(competition => {
+  		  this.competition = competition;
+  		  this.competition.joined = false;
+  		});
   }
+
+
 
   getFileContent(): void {
     this.competitionsService.getFileContent(+this.route.snapshot.paramMap.get('id'))
@@ -55,9 +63,15 @@ export class ViewCompetitionComponent implements OnInit {
   }
 
   joinCompetition(): void {
-    /*todo: send request to backend to join competition */
+    this.competitionsService.joinCompetition(this.competition.id, String(this.user.id))
+      .subscribe(n => {
+        if (n === this.competition.id || n === -1) {
+          this.competition.joined = true;
+        } else {
+          console.log('error joining competition');
+        }
+      });
     console.log('competition ' + this.competition.id + ' joined!');
-    this.competition.joined = true;
 
   }
   setinputval( event:any ) {
@@ -71,4 +85,17 @@ export class ViewCompetitionComponent implements OnInit {
     });
   }
 
+  onFileChange(files) {
+    for (const file of files) {
+      this.formData.append('fileUpload', file);
+    }
+  }
+
+
+  onSubmit() {
+    this.competitionsService.uploadSubmission(String(this.competition.id), String(this.user.id), this.formData)
+      .subscribe(res => {
+        console.log(res);
+      });
+  }
 }
