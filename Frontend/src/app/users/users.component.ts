@@ -30,7 +30,7 @@ export class UsersComponent implements OnInit {
   approveUsers() {
     const selected = this.unapprovedUsers.filter(u => u.selected);
     console.log(selected);
-    const selectedIds = selected.map(u => u.userid);
+    const selectedIds = selected.map(u => u.id);
     console.log(selectedIds);
     this.userService.acceptUsers(selectedIds);
 

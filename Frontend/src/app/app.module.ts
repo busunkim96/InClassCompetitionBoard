@@ -34,7 +34,7 @@ import { HeaderComponent } from './header/header.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [CompetitionsService, UserService, SignupService],
   bootstrap: [AppComponent]

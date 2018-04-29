@@ -20,6 +20,7 @@ export class ViewCompetitionComponent implements OnInit {
   id: number;
   compId: number;
   formData: FormData;
+  submission: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +42,8 @@ export class ViewCompetitionComponent implements OnInit {
     this.getCompetition();
     this.getFileContent();
     this.formData = new FormData();
+    this.submission = localStorage.getItem('user')['competitions'][0]['submission'];
+    console.log(this.submission);
   }
 
   getCompetition(): void {
@@ -51,6 +54,7 @@ export class ViewCompetitionComponent implements OnInit {
   		  this.competition.joined = false;
   		});
   }
+
 
 
 
