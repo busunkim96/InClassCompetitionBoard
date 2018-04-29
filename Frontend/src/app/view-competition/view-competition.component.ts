@@ -21,6 +21,8 @@ export class ViewCompetitionComponent implements OnInit {
   compId: number;
   formData: FormData;
   submission: string;
+  submitted: boolean;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +30,7 @@ export class ViewCompetitionComponent implements OnInit {
     private location: Location
     ) {
     this.competition = new Competition();
+    this.submitted = false;
   }
 
   ngOnInit(): void {
@@ -42,8 +45,6 @@ export class ViewCompetitionComponent implements OnInit {
     this.getCompetition();
     this.getFileContent();
     this.formData = new FormData();
-    this.submission = localStorage.getItem('user')['competitions'][0]['submission'];
-    console.log(this.submission);
   }
 
   getCompetition(): void {
@@ -61,7 +62,7 @@ export class ViewCompetitionComponent implements OnInit {
   getFileContent(): void {
     this.competitionsService.getFileContent(+this.route.snapshot.paramMap.get('id'))
       .subscribe( content => {
-        console.log(content);
+        console.log('file content is' + content);
         this.fileContent =  content;
       });
   }
@@ -96,10 +97,12 @@ export class ViewCompetitionComponent implements OnInit {
   }
 
 
+
   onSubmit() {
     this.competitionsService.uploadSubmission(String(this.competition.id), String(this.user.id), this.formData)
       .subscribe(res => {
         console.log(res);
+        this.submitted = true;
       });
   }
 }
